@@ -3,17 +3,17 @@
 #include <string.h>
 int main() 
 { 
-    FILE* demo; 
+    FILE* ram; 
     int display; 
-    demo = fopen("RAM.bin", "rb");
+    ram = fopen("RAM.bin", "rb"); // Hola dani
 
     while (1) {  
-        display = fgetc(demo); 
-        if (feof(demo)) 
+        display = fgetc(ram); 
+        if (feof(ram)) 
             break; 
         printf("%c", display); 
     } 
-    
-    fclose(demo); 
+
+    fclose(ram); 
     return 0; 
 } 
