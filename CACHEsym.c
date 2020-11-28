@@ -16,7 +16,7 @@ int main()
         Cache.Datos[i] = 0;
     FILE* ram; 
     int display; 
-    ram = fopen("RAM.bin", "rb"); // Hola dani hola raul
+    ram = fopen("RAM.bin", "rb");
 
     while (1) {  
         display = fgetc(ram); 
