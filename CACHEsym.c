@@ -21,18 +21,16 @@ int main()
     ram = fopen("RAM.bin", "rb");
 
     while (1) {  
-        display = fgetc(ram); 
+        display = fgetc(ram);
         if (feof(ram)) 
             break; 
         printf("%c", display); 
     } 
 
-    fclose(ram); 
-    return 0; 
-
     //guarda el contenido del fichero en un array de chars
     rewind(ram);
-    fgets(RAM,102,ram);
+    fgets(RAM,1025,ram);
 
-return 0;
+    fclose(ram); 
+    return 0;
 } 

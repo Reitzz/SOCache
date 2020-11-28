@@ -5,11 +5,14 @@
 
 
 int main() {
-
+    
 //guarda el contenido del fichero en un array de chars
-char RAM[1024];
 rewind(ram);
-fgets(RAM,102,ram);
+fgets(RAM[1024],1024,r);
+//imprime 
+ for(i=0;i<=1023;i++){
+        printf("RAM[%d]: %c\n",i, RAM[i]);
+    }
 
 
 
