@@ -5,7 +5,7 @@ int main()
 { 
     FILE* ram; 
     int display; 
-    ram = fopen("RAM.bin", "rb"); // Hola dani
+    ram = fopen("RAM.bin", "rb"); // Hola dani hola raul
 
     while (1) {  
         display = fgetc(ram); 
