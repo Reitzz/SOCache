@@ -12,9 +12,9 @@ char str[5];
 
 int main() 
 { 
-    int i = 0, j = 0, tiempoglobal = 0, numfallos = 0, datoinicial, palabra, linea, etq;
+    int i = 0, j = 0, tiempoglobal = 0, numfallos = 0, datoinicial, palabra, linea, etq, comprobante, instante;
     unsigned char RAM[1024];
-    char bin[16];
+    char bin[16], texto[100];
 
     T_LINEA_CACHE Cache[4];
     for(i; i<=4; i++){
@@ -33,12 +33,29 @@ int main()
     rewind(f);
     for(i = 0; i<=11; i++){
         datoinicial = (int)strtol(sacarLinea(f), NULL, 16);
-        printf("Dato inicial es %04x\n", datoinicial);
         palabra = datoinicial&0b111;
         linea = (datoinicial>>3)&0b11;
         etq = (datoinicial>>5);
-        printf("La palabra es %02x, la linea es %02x y la etiqueta es %02x\n", palabra, linea, etq);
+     
+
+        if ( Cache[linea].ETQ != etq){
+            numfallos++;
+            printf("T: %d, Fallo de CACHE %d, ADDR %04X ETQ %X linea %02X palabra %02X bloque %02X\n" , instante, numfallos, addr , etq, linea, palabra, linea);
+            tiempoglobal = tiempoglobal + 10;
+            printf("Cargando el bloque %02X en la linea %02X\n", Cache[linea], linea);
+            for(j=0; j<=7; j++)
+                Cache[linea].Datos[j] = RAM[etq + linea + j];
+            Cache[linea].ETQ = etq;
+        }
+
+
+        printf("T: %d, Acierto de CACHE, ADDR %04X ETQ %Xlinea %02X palabra %02X DATO %02X\n", instante, addr, etq, linea, palabra, dato);
+        //array texto?
+        for(i=0; i<4; i++)
+          printf("ETQ:%02X  Datos %02X %02X %02X %02X %02X %02X %02X %02X\n", Cache[i].ETQ, Cache[i].Datos[7], Cache[i].Datos[6], Cache[i].Datos[5], Cache[i].Datos[4], Cache[i].Datos[3], Cache[i].Datos[2], Cache[i].Datos[1], Cache[i].Datos[0]);
+        
     }
+
     fclose(f);
     return 0;
 } 
@@ -60,6 +77,15 @@ char* sacarLinea(FILE *f) {
 
     return str;
 }
+
+
+
+
+
+
+
+
+
 /*
 int binadec(long binario) {
     int i = 0, numerofinal = 0, placeholder;
