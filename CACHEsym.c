@@ -8,10 +8,11 @@ typedef struct {
  short int ETQ;
  short int Datos[8];
 } T_LINEA_CACHE;
+char str[5];
 
 int main() 
 { 
-    int i = 0, j = 0, tiempoglobal = 0, numfallos = 0, datoinicial;
+    int i = 0, j = 0, tiempoglobal = 0, numfallos = 0, datoinicial, palabra, linea, etq;
     unsigned char RAM[1024];
     char bin[16];
 
@@ -28,20 +29,21 @@ int main()
     fgets(RAM,1025,ram);
     fclose(ram);
     FILE* f;
-    f = fopen("accesos_memoria.txt", "r");
+    f = fopen("accesos_memoria.txt", "r+");
     rewind(f);
     for(i = 0; i<=11; i++){
-        datoinicial = (int)strtol(sacarLinea(f), NULL, 16)%16;
-        printf("Dato inicial es %i", datoinicial);
+        datoinicial = (int)strtol(sacarLinea(f), NULL, 16);
+        printf("Dato inicial es %04x\n", datoinicial);
+        palabra = datoinicial&0b111;
+        linea = (datoinicial>>3)&0b11;
+        etq = (datoinicial>>5);
+        printf("La palabra es %02x, la linea es %02x y la etiqueta es %02x\n", palabra, linea, etq);
     }
     fclose(f);
     return 0;
 } 
 
 char* sacarLinea(FILE *f) {
-
-    //Guarda la cadena que se devolvera.
-    char str[5];
 
     //Guarda el tamaÃo de la cadena.
     int tam=0;
@@ -58,62 +60,7 @@ char* sacarLinea(FILE *f) {
 
     return str;
 }
-/*void HexToBin(string hexadecimal){
-    long int i = 0;
-    while (hexadecimal[i]) {
-        switch (hexadecimal[i]) {
-        case '0':
-            bin = "0000";
-            break;
-        case '1':
-            bin = "0001";
-            break;
-        case '2':
-            bin = "0010";
-            break;
-        case '3':
-            bin = "0011";
-            break;
-        case '4':
-            bin = "0100";
-            break;
-        case '5':
-            bin = "0101";
-            break;
-        case '6':
-            bin = "0110";
-            break;
-        case '7':
-            bin = "0111";
-            break;
-        case '8':
-            bin = "1000";
-            break;
-        case '9':
-            bin = "1001";
-            break;
-        case 'A':
-            bin = "1010";
-            break;
-        case 'B':
-            bin = "1011";
-            break;
-        case 'C':
-            bin = "1100";
-            break;
-        case 'D':
-            bin = "1101";
-            break;
-        case 'E':
-            bin = "1110";
-            break;
-        case 'F':
-            bin = "1111";
-            break;
-        }
-        i++;
-    }
-}
+/*
 int binadec(long binario) {
     int i = 0, numerofinal = 0, placeholder;
     while (binario != 0) {
