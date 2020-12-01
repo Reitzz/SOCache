@@ -17,11 +17,11 @@ int main()
     rewind(ram);
     fgets(RAM,1025,ram);
     fclose(ram);
-    FILE* f;
-    f = fopen("accesos_memoria.txt", "r+");
-    rewind(f);
-    while(!feof(f)){
-        datoinicial = (int)strtol(sacarLinea(f), NULL, 16);
+    FILE* accesos_memoria;
+    accesos_memoria = fopen("accesos_memoria.txt", "r+");
+    rewind(accesos_memoria);
+    while(!feof(accesos_memoria)){
+        datoinicial = (int)strtol(sacarLinea(accesos_memoria), NULL, 16);
         palabra = datoinicial&0b111;
         linea = (datoinicial>>3)&0b11;
         etq = (datoinicial>>5);
@@ -47,6 +47,6 @@ int main()
     texto[++i] = '\0';
     printf("Número total de accesos: %i\nNúmero de fallos: %i\nTiempo medio de acceso: %i\n", (i-1), numfallos, tiempoglobal);
     printf("\nTexto leído desde la cache: %s\n\n", texto);
-    fclose(f);
+    fclose(accesos_memoria);
     return 0;
 } 
