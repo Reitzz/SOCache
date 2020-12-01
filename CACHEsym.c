@@ -4,7 +4,7 @@ int main()
 { 
     int i, j, tiempoglobal = 0, numfallos = 0, datoinicial, palabra, linea, etq;
     unsigned char RAM[1024];
-    char bin[16], texto[100];
+    char texto[100];
     T_LINEA_CACHE Cache[4];
     for(i = 0; i<=4; i++){
         Cache[i].ETQ = 0xFF;
