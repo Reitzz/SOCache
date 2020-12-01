@@ -1,21 +1,10 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
-char* sacarLinea(FILE *f);
-
-typedef struct {
- short int ETQ;
- short int Datos[8];
-} T_LINEA_CACHE;
-char str[5];
+include "CACHElib.h"
 
 int main() 
 { 
     int i, j, tiempoglobal = 0, numfallos = 0, datoinicial, palabra, linea, etq;
     unsigned char RAM[1024];
     char bin[16], texto[100];
-
     T_LINEA_CACHE Cache[4];
     for(i = 0; i<=4; i++){
         Cache[i].ETQ = 0xFF;
@@ -56,25 +45,8 @@ int main()
         sleep(2);
     }
     texto[++i] = '\0';
-    printf("%s\n\n", texto);
+    printf("Número total de accesos: %i\nNúmero de fallos: %i\nTiempo medio de acceso: %i\n", (i-1), numfallos, tiempoglobal);
+    printf("\nTexto leído desde la cache: %s\n\n", texto);
     fclose(f);
     return 0;
 } 
-
-char* sacarLinea(FILE *f) {
-
-    //Guarda el tamaÃo de la cadena.
-    int tam=0;
-
-    //Guarda temporalmente cada caracter.
-    char tmp = fgetc(f);
-
-    //Guarda cada char en str mientras no encuentre un salto de linea o EOF.
-    while( (tmp!='\n') && !feof(f)) {
-        str[tam++]=tmp;
-        tmp=getc(f);
-    }
-    str[tam]='\0';
-
-    return str;
-}
