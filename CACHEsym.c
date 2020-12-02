@@ -56,7 +56,7 @@ int main()
         //sleep(2);
     }
     texto[++i] = '\0';
-    printf("Número total de accesos: %i\nNúmero de fallos: %i\nTiempo medio de acceso: %f\n", (i-1), numfallos, (tiempoglobal / (float)(i-1)));
+    printf("Número total de accesos: %i\nNúmero de fallos: %i\nTiempo medio de acceso: %f\n", (i-1), numfallos, tiempoglobal / (float)(i-1));
     printf("\nTexto leído desde la cache: %s\n\n", texto);
     fclose(accesos_memoria);
     return 0;
