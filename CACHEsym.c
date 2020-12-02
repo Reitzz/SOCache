@@ -2,7 +2,8 @@ include "CACHElib.h"
 
 int main() 
 { 
-    int i, j, tiempoglobal = 0, numfallos = 0, datoinicial, palabra, linea, etq;
+    int i, j, numfallos = 0, datoinicial, palabra, linea, etq;
+    float tiempoglobal = 0;
     unsigned char RAM[1024];
     char texto[100];
     T_LINEA_CACHE Cache[4];
@@ -42,10 +43,10 @@ int main()
         i++;
         tiempoglobal += 2;
         printf("\n");
-        sleep(2);
+        //sleep(2);
     }
     texto[++i] = '\0';
-    printf("Número total de accesos: %i\nNúmero de fallos: %i\nTiempo medio de acceso: %i\n", (i-1), numfallos, tiempoglobal);
+    printf("Número total de accesos: %i\nNúmero de fallos: %i\nTiempo medio de acceso: %f\n", (i-1), numfallos, (tiempoglobal / (float)(i-1)));
     printf("\nTexto leído desde la cache: %s\n\n", texto);
     fclose(accesos_memoria);
     return 0;
