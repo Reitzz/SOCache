@@ -1,4 +1,4 @@
-include "CACHElib.h"
+#include "CACHElib.h"
 
 int main() 
 { 
@@ -28,14 +28,14 @@ int main()
         etq = (datoinicial>>5);
         if ( Cache[linea].ETQ != etq){
             numfallos++;
-            printf("T: %d, Fallo de CACHE %d, ADDR %04X ETQ %02X linea %02X palabra %02X bloque %02X\n" , tiempoglobal, numfallos, datoinicial, etq, linea, palabra, linea);
+            printf("T: %f, Fallo de CACHE %d, ADDR %04X ETQ %02X linea %02X palabra %02X bloque %02X\n" , tiempoglobal, numfallos, datoinicial, etq, linea, palabra, linea);
             tiempoglobal += 10;
             printf("Cargando el bloque %02X en la linea %02X\n", linea, linea);
             for(j=0; j<=7; j++)
                 Cache[linea].Datos[j] = RAM[etq + linea + j];
             Cache[linea].ETQ = etq;
         }
-        printf("T: %d, Acierto de CACHE, ADDR %04X ETQ %02X linea %02X palabra %02X DATO %02X\n", tiempoglobal, datoinicial, etq, linea, palabra, RAM[datoinicial]);
+        printf("T: %f, Acierto de CACHE, ADDR %04X ETQ %02X linea %02X palabra %02X DATO %02X\n", tiempoglobal, datoinicial, etq, linea, palabra, RAM[datoinicial]);
         //array texto?
         for(j=0; j<4; j++)
           printf("ETQ:%02X  Datos %02X %02X %02X %02X %02X %02X %02X %02X\n", Cache[j].ETQ, Cache[j].Datos[7], Cache[j].Datos[6], Cache[j].Datos[5], Cache[j].Datos[4], Cache[j].Datos[3], Cache[j].Datos[2], Cache[j].Datos[1], Cache[j].Datos[0]);
