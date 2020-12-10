@@ -24,11 +24,19 @@ int main()
     }
     i = 0;
     FILE* ram; 
+     if(ram = fopen("RAM.bin", "r+") == NULL){
+        printf("No se puede localizar el fichero RAM.bin. Ubiquelo en el directorio correspondiente y vuelva a iniciar el programa");
+        exit (-1);
+    }
     ram = fopen("RAM.bin", "rb");   //guarda el contenido del fichero en un array de chars
     rewind(ram);
     fgets(RAM,1025,ram);
     fclose(ram);
     FILE* accesos_memoria;
+    if(accesos_memoria = fopen("accesos_memoria.txt", "r+") == NULL){
+        printf("No se puede localizar el fichero accesos_memoria.txt. Ubiquelo en el directorio correspondiente y vuelva a iniciar el programa");
+        exit (-1);
+    }
     accesos_memoria = fopen("accesos_memoria.txt", "r+");
     rewind(accesos_memoria);
     while(!feof(accesos_memoria)){
@@ -53,7 +61,7 @@ int main()
         i++;
         tiempoglobal += 2;
         printf("\n");
-        //sleep(2);
+        sleep(2);
     }
     texto[++i] = '\0';
     printf("Número total de accesos: %i\nNúmero de fallos: %i\nTiempo medio de acceso: %f\n", (i-1), numfallos, tiempoglobal / (float)(i-1));
