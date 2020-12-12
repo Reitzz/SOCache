@@ -5,7 +5,7 @@
 
 typedef struct {
  short int ETQ;
- unsigned char Datos[8];   // Si vamos a guardar chars aqui, lo pongo como char :D
+ short int Datos[8];
 } T_LINEA_CACHE;
 
 char str[5];
@@ -50,8 +50,6 @@ int main()
         exit (-1);
     }
 
-    //Se sacan la palabra, la etiqueta y la linea de cada direccion de memoria
-
     accesos_memoria = fopen("accesos_memoria.txt", "r+");
     rewind(accesos_memoria);
 
@@ -59,7 +57,7 @@ int main()
         datoinicial = convertirDireccion(accesos_memoria);
         dividirDireccion(ELP, datoinicial);
 
-        //En caso de que haya fallo de cache (no coinciden la etiqueta de la direccion y la ETQ de la linea de la cache) se hace que coincidan para que en el siguiente intento haya acierto de cache
+        //En caso de que haya fallo de cache (no coinciden la etiqueta de la direccion y la ETQ de la linea de la cache) carga el bloque y continua
 
         if ( Cache[ELP[1]].ETQ != ELP[0]){
             numfallos++;
@@ -83,7 +81,7 @@ int main()
 
         tiempoglobal++;
         printf("\n");
-        //Sleep(2);
+        sleep(2);
     }
 
     //Se imprimen el texto leido, el numero total de accesos, el numero de fallos y el tiempo medio de acceso
@@ -98,11 +96,11 @@ int main()
 void rellenarDatos(T_LINEA_CACHE* Cache){
     int i;
     for(i = 0; i<=4; i++)
-        Cache[i] = (T_LINEA_CACHE){0xFF,{0,0,0,0,0,0,0,0}};
+        Cache[i] = (T_LINEA_CACHE){0xFF,{0,0,0,0,0,0,0,0}}; //Rellenamos cada una de las lineas de la cache con los datos del enunciado
 }
 
 char* sacarDireccion(FILE *accesos_memoria) {
-    int tam=0;                                      //Guarda el tamanio de la cadena.
+    int tam=0;                                      //Guarda el tamaño de la cadena.
     char tmp = fgetc(accesos_memoria);              //Guarda temporalmente cada caracter.
     while( (tmp!='\n') && !feof(accesos_memoria)) { //Guarda cada char en str mientras no encuentre un salto de linea o se acabe el fichero.
         str[tam++]=tmp;
@@ -113,11 +111,11 @@ char* sacarDireccion(FILE *accesos_memoria) {
 }
 
 int convertirDireccion(FILE *f){
-    return (int)strtol(sacarDireccion(f), NULL, 16);
+    return (int)strtol(sacarDireccion(f), NULL, 16);   //Hacemos un string to int de la direccion sacada en sacarDireccion para manipularlo
 }
 
 void dividirDireccion(int *ELP, int datoinicial){
     ELP[0]= (datoinicial>>5);
-    ELP[1]= (datoinicial>>3)&0b11;
+    ELP[1]= (datoinicial>>3)&0b11;                  //Se sacan la palabra, la etiqueta y la linea de cada direccion de memoria con mascaras de bits
     ELP[2] = datoinicial&0b111;
 }
